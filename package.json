@@ -5,16 +5,136 @@
   "dependencies": {
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
+    "react-app-polyfill": "^0.2.0",
+    "react-intl": "^2.8.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.3",
+    "classnames": "^2.2.6",
+    "eslint-plugin-react-app": "^3.0.0",
+    "prop-types": "^15.6.2"
+  },
+  "devDependencies": {
+    "require-context.macro": "1.0.4",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-actions": "^4.1.11",
+    "@storybook/addon-console": "^1.1.0",
+    "@storybook/addon-links": "^4.1.11",
+    "@storybook/addon-storyshots": "^4.1.11",
+    "@storybook/addons": "^4.1.11",
+    "@storybook/react": "^4.1.11",
+    "@babel/core": "^7.2.2",
+    "babel-eslint": "9.0.0",
+    "babel-loader": "^8.0.4",
+    "babel-runtime": "^6.26.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
+    "eslint-config-prettier": "^3.6.0",
+    "eslint-config-react-app": "^3.0.6",
+    "eslint-plugin-flowtype": "2.50.1",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jsx-a11y": "6.1.2",
+    "eslint-plugin-react": "7.11.1",
+    "husky": "1.3.1",
+    "jest-junit": "4.0.0",
+    "lint-staged": "^8.1.0",
+    "node-sass": "^4.11.0",
+    "prettier": "^1.16.0",
+    "react-axe": "^3.0.2",
+    "react-test-renderer": "^16.5.2",
+    "react-testing-library": "^5.1.1",
+    "stylelint": "^9.6.0",
+    "stylelint-config-standard": "^18.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:push": "react-scripts test --bail --coverage",
+    "test:ci": "react-scripts test --bail --coverage --testResultsProcessor ./node_modules/jest-junit",
+    "test:e2e": "npm run cucumberjs --prefix ./e2e -- --require './tests/{steps,support}/**/*.js'",
+    "format:scripts": "prettier --write '{src,e2e}/**/*.{js,jsx,json}'",
+    "format:styles": "prettier --write 'src/**/*.scss'",
+    "format": "npm run format:scripts && npm run format:styles",
+    "lint:scripts": "eslint 'src/**/*.{js,jsx}'",
+    "lint:styles": "stylelint 'src/**/*.scss'",
+    "lint": "npm run lint:scripts && npm run lint:styles",
+    "precommit": "lint-staged",
+    "postinstall": "cd e2e && yarn install",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test:push && npm run lint"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ],
+    "src/**/*.scss": [
+      "prettier --write",
+      "stylelint --syntax scss",
+      "git add"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!/node_modules/",
+      "!src/?(*).js",
+      "!src/**/?(*.)(dev).{js,jsx}",
+      "!src/**/?(index).{js,jsx}",
+      "!src/**/?(*.)(stories).{js,jsx}",
+      "!src/common/constants/?(*).js",
+      "!src/common/store/**/?(configureStore*).{js,jsx}",
+      "!src/polyfills.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "cobertura"
+    ]
+  },
+  "jest-junit": {
+    "suiteName": "jest tests",
+    "output": "./coverage/junit.xml",
+    "classNameTemplate": "{classname}-{title}",
+    "titleTemplate": "{classname}-{title}",
+    "ancestorSeparator": " › ",
+    "usePathForSuiteName": "true"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "stylelint": {
+    "extends": "stylelint-config-standard",
+    "rules": {
+      "at-rule-empty-line-before": null,
+      "no-empty-source": null,
+      "color-hex-length": null,
+      "font-family-no-missing-generic-family-keyword": null,
+      "declaration-colon-newline-after": null,
+      "value-list-comma-newline-after": null
+    }
   },
   "browserslist": [
     ">0.2%",

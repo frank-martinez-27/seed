@@ -1,0 +1,8 @@
+{
+  "en": {
+    "common.components.Loader.loading": "Loading"
+  },
+  "es": {
+    "common.components.Loader.loading": "Cargando"
+  }
+}
