@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { IntlProvider, addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
+import es from 'react-intl/locale-data/es';
 import { LANGUAGES } from '../../common/i18n/languages';
 import localeData from '../../common/i18n/messages.json'; // translated strings
 
-addLocaleData([...en]);
+addLocaleData([...en, ...es]);
 
 // Define user's language. Different browsers have the user locale defined
 // on different fields on the `navigator` object, so we make sure to account

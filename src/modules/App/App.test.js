@@ -1,9 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { mountWithIntl } from '../../common/helpers/testHelpers/intl-enzyme';
+import { MemoryRouter } from 'react-router-dom';
 import App from './App';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+describe('<Application />', () => {
+  it('renders without crashing', () => {
+    mountWithIntl(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+  });
 });

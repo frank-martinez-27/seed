@@ -60,7 +60,6 @@
     "lint:styles": "stylelint 'src/**/*.scss'",
     "lint": "npm run lint:scripts && npm run lint:styles",
     "precommit": "lint-staged",
-    "postinstall": "cd e2e && yarn install",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -92,7 +91,8 @@
       "!src/**/?(*.)(stories).{js,jsx}",
       "!src/common/constants/?(*).js",
       "!src/common/store/**/?(configureStore*).{js,jsx}",
-      "!src/polyfills.js"
+      "!src/polyfills.js",
+      "!src/common/helpers/**/?(*).{js,jsx}"
     ],
     "coverageThreshold": {
       "global": {
